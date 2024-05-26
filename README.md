@@ -8,7 +8,11 @@ Before you begin, ensure that `curl` is installed on your system. If `curl` is n
 sudo apt-get install -y curl
 ```
 
-1. **Download the koha_setup.sh script:**
+1. **Download the setup script:**
+
+   ```sh
+   curl -fsSL https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh -o koha_setup.sh
+   ```
 
 2. **Run the Koha setup script with sudo:**
 
