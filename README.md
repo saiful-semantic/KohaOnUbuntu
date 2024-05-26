@@ -16,7 +16,7 @@ sudo apt-get install -y curl
    sudo -E bash koha_setup.sh
    ```
 
-3. **Install Node.js:**
+3. **Install Koha:**
 
    ```sh
    sudo apt-get install -y koha-common
