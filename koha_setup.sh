@@ -4,7 +4,7 @@
 set -o pipefail
 
 # Script Version
-VERSION="1.0.0"
+VERSION="0.1.0"
 
 # Logger Function
 log() {
@@ -91,7 +91,7 @@ configure_repo() {
 
 # Argument parsing for version
 if [[ "$1" == "--version" ]]; then
-    echo "koha_setup.sh version $VERSION"
+    echo "koha_setup.sh v${VERSION}"
     exit 0
 fi
 
