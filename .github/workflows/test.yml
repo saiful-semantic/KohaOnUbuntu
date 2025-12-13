@@ -34,7 +34,6 @@ jobs:
 
       - name: Run Shellcheck
         run: find . -name "*.sh" -exec shellcheck {} +
-        continue-on-error: true # Don't block on style issues for now
 
       - name: Run Setup Script
         run: |
