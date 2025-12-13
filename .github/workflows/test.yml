@@ -28,14 +28,13 @@ jobs:
       - name: Install prerequisites
         run: |
             apt-get update
-            apt-get install -y git sudo curl xz-utils
+            apt-get install -y git sudo curl xz-utils shellcheck
 
       - uses: actions/checkout@v3
 
       - name: Run Shellcheck
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: '.'
+      - name: Run Shellcheck
+        run: find . -name "*.sh" -exec shellcheck {} +
         continue-on-error: true # Don't block on style issues for now
 
       - name: Run Setup Script
