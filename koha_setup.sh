@@ -91,7 +91,7 @@ configure_repo() {
 
 # Argument parsing for version
 if [[ "$1" == "--version" ]]; then
-    echo "koha_setup.sh v${VERSION}"
+    echo "koha_setup.sh version $VERSION"
     exit 0
 fi
 
