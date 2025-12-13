@@ -10,7 +10,8 @@ VERSION="1.0.0"
 log() {
   local message="$1"
   local type="$2"
-  local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+  local timestamp
+  timestamp=$(date '+%Y-%m-%d %H:%M:%S')
   local color
   local endcolor="\033[0m"
 
@@ -29,7 +30,7 @@ handle_error() {
   local exit_code=$1
   local error_message="$2"
   log "Error: $error_message (Exit Code: $exit_code)" "error"
-  exit $exit_code
+  exit "$exit_code"
 }
 
 check_root() {

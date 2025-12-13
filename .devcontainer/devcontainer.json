@@ -13,6 +13,7 @@
     },
     // Install shellcheck and dependencies
     "postCreateCommand": "sudo apt-get update && sudo apt-get install -y shellcheck curl gnupg2 lsb-release",
+    "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
     "remoteUser": "vscode",
     "runArgs": [
         "--privileged"
