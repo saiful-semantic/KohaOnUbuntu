@@ -1,4 +1,4 @@
-name: Test Setup Script
+name: Tests
 
 on:
   push:
