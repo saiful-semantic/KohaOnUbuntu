@@ -33,7 +33,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run Shellcheck
-      - name: Run Shellcheck
         run: find . -name "*.sh" -exec shellcheck {} +
         continue-on-error: true # Don't block on style issues for now
 
