@@ -1,15 +1,40 @@
+![Build Status](https://github.com/saiful-semantic/KohaOnUbuntu/actions/workflows/test.yml/badge.svg)
+
 This repository contains the instructions to install the **[Koha](https://koha-community.org/)** on Ubuntu distributions with setup and support scripts.
 
 #### On Ubuntu / Debian
 
-1. **Run the repository setup script:**
+Before you begin, ensure that `curl` is installed on your system. If `curl` is not installed, you can install it using the following command:
+
+```sh
+sudo apt-get install -y curl
+```
+
+1. **Download the setup script:**
 
    ```sh
-   curl -fsSL https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh | sudo -E bash
+   curl -fsSL https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh -o koha_setup.sh
    ```
 
-2. **Install Koha:**
+2. **Run the Koha setup script with sudo:**
+
+   ```sh
+   sudo -E bash koha_setup.sh
+   ```
+   
+   _Optional: To install a specific Koha release (e.g. `oldstable`):_
+   ```sh
+   sudo KOHA_RELEASE=oldstable bash koha_setup.sh
+   ```
+
+3. **Install Koha:**
 
    ```sh
    sudo apt-get install -y koha-common
    ```
+
+#### Versioning
+To check the version of the script:
+```sh
+./koha_setup.sh --version
+```

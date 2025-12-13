@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Enable pipefail to catch pipeline errors
+set -o pipefail
+
+# Script Version
+VERSION="1.0.0"
+
 # Logger Function
 log() {
   local message="$1"
@@ -26,9 +32,10 @@ handle_error() {
   exit $exit_code
 }
 
-# Function to check for command availability
-command_exists() {
-  command -v "$1" &> /dev/null
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+       handle_error "1" "This script must be run as root"
+    fi
 }
 
 check_os() {
@@ -48,7 +55,7 @@ install_pre_reqs() {
     fi
 
     # Run 'apt-get install'
-    if ! apt-get install -y apt-transport-https ca-certificates curl gnupg2; then
+    if ! apt-get install -y apt-transport-https ca-certificates curl gnupg2 lsb-release; then
         handle_error "$?" "Failed to install packages"
     fi
 
@@ -64,10 +71,10 @@ install_pre_reqs() {
 
 # Function to configure the Repo
 configure_repo() {
-    local KOHA_RELEASE=$1
+    local KOHA_RELEASE=${KOHA_RELEASE:-$1}
 
     arch=$(dpkg --print-architecture)
-    if [ "$arch" != "i386" ] && [ "$arch" != "amd64" ] && [ "$arch" != "arm64" ] && [ "$arch" != "armhf" ]; then
+    if [[ ! "$arch" =~ ^(i386|amd64|arm64|armhf)$ ]]; then
       handle_error "1" "Unsupported architecture: $arch. Only i386, amd64, arm64, and armhf are supported."
     fi
 
@@ -77,16 +84,21 @@ configure_repo() {
     if ! apt-get update -y; then
         handle_error "$?" "Failed to run 'apt-get update'"
     else
-        log "Repository configured successfully. To install Koha, run: apt-get install koha-common -y" "success"
+        log "Repository configured successfully (Release: $KOHA_RELEASE). To install Koha, run: apt-get install koha-common -y" "success"
     fi
 }
 
-# Define Koha Release
-KOHA_RELEASE="stable"
+# Argument parsing for version
+if [[ "$1" == "--version" ]]; then
+    echo "koha_setup.sh version $VERSION"
+    exit 0
+fi
 
-# Check OS
-check_os
+# Define Default Koha Release if not set via env
+KOHA_RELEASE=${KOHA_RELEASE:-"stable"}
 
 # Main execution
+check_root
+check_os
 install_pre_reqs || handle_error $? "Failed installing pre-requisites"
 configure_repo "$KOHA_RELEASE" || handle_error $? "Failed configuring repository"

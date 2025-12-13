@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verify Version Match
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          SCRIPT_VERSION=$(grep 'VERSION=' koha_setup.sh | cut -d'"' -f2)
+          if [ "$TAG_VERSION" != "$SCRIPT_VERSION" ]; then
+            echo "Error: Tag version ($TAG_VERSION) does not match script version ($SCRIPT_VERSION)"
+            exit 1
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true

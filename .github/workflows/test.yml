@@ -1,0 +1,49 @@
+name: Test Setup Script
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        container: 
+          - "ubuntu:20.04"
+          - "ubuntu:22.04"
+          - "ubuntu:24.04"
+          - "debian:11"
+          - "debian:12"
+
+    container:
+      image: ${{ matrix.container }}
+      options: --privileged
+
+    steps:
+      - name: Install git and sudo (prereqs for checkout and script)
+        run: |
+            apt-get update
+            apt-get install -y git sudo
+
+      - uses: actions/checkout@v3
+
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+        continue-on-error: true # Don't block on style issues for now
+
+      - name: Run Setup Script
+        run: |
+          chmod +x koha_setup.sh
+          ./koha_setup.sh
+
+      - name: Run Verification
+        run: |
+          chmod +x tests/verify.sh
+          ./tests/verify.sh
