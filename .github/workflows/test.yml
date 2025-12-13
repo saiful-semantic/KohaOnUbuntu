@@ -25,10 +25,10 @@ jobs:
       options: --privileged
 
     steps:
-      - name: Install git and sudo (prereqs for checkout and script)
+      - name: Install prerequisites
         run: |
             apt-get update
-            apt-get install -y git sudo
+            apt-get install -y git sudo curl xz-utils
 
       - uses: actions/checkout@v3
 
