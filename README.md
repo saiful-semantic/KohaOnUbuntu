@@ -1,5 +1,12 @@
 ![Build Status](https://github.com/saiful-semantic/KohaOnUbuntu/actions/workflows/test.yml/badge.svg)
 
+**Verified on**:
+- Ubuntu 24.04 (Noble Numbat)
+- Ubuntu 22.04 (Jammy Jellyfish)
+- Ubuntu 20.04 (Focal Fossa)
+- Debian 12 (Bookworm)
+- Debian 11 (Bullseye)
+
 This repository contains the instructions to install the **[Koha](https://koha-community.org/)** on Ubuntu distributions with setup and support scripts.
 
 #### On Ubuntu / Debian
