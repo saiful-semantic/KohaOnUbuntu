@@ -10,23 +10,23 @@
 
 This repository contains the instructions to install the **[Koha](https://koha-community.org/)** on Ubuntu distributions with setup and support scripts.
 
-#### On Ubuntu / Debian
+### On Ubuntu / Debian
 
 Ensure that `curl` is installed on your system:
 
-```sh
+```bash
 sudo apt-get install -y curl
 ```
 
-**Run the setup script directly with sudo:**
+#### Run the setup script directly with sudo
 
-```sh
+```bash
 curl -fsSL https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh | sudo -E bash
 ```
 
-**Alternatively, download and run the Koha setup script with sudo:**
+#### Alternatively, download and run the Koha setup script with sudo
 
-```
+```bash
 curl -fsSLO https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh
 sudo bash koha_setup.sh
 
@@ -34,22 +34,22 @@ sudo bash koha_setup.sh
 # sudo KOHA_RELEASE=oldstable bash koha_setup.sh
 ```
 
-**Install Koha:**
+#### Install Koha
 
-```sh
+```bash
 sudo apt-get install -y koha-common
 ```
 
-**Install MariaDB or MySQL and enable requried Apache modules**
+#### Install MariaDB or MySQL and enable required Apache modules
 
-```sh
+```bash
 sudo apt-get install -y mariadb-server
 sudo a2enmod rewrite cgi headers proxy_http ssl
 sudo systemctl restart apache2
 ```
 
-**Proceed with creating a new Koha instance:**
+#### Proceed with creating a new Koha instance
 
-```sh
+```bash
 sudo koha-create --create-db <instance_name>
 ```
