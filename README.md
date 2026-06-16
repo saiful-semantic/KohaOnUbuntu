@@ -1,9 +1,10 @@
 ![Build Status](https://github.com/saiful-semantic/KohaOnUbuntu/actions/workflows/test.yml/badge.svg)
 
 **Verified on**:
-- Ubuntu 24.04 (Noble Numbat)
-- Ubuntu 22.04 (Jammy Jellyfish)
-- Ubuntu 20.04 (Focal Fossa)
+
+- Ubuntu 26.04 LTS (Resolute Raccoon)
+- Ubuntu 24.04 LTS (Noble Numbat)
+- Ubuntu 22.04 LTS (Jammy Jellyfish)
 - Debian 12 (Bookworm)
 - Debian 11 (Bullseye)
 
@@ -11,37 +12,44 @@ This repository contains the instructions to install the **[Koha](https://koha-c
 
 #### On Ubuntu / Debian
 
-Before you begin, ensure that `curl` is installed on your system. If `curl` is not installed, you can install it using the following command:
+Ensure that `curl` is installed on your system:
 
 ```sh
 sudo apt-get install -y curl
 ```
 
-1. **Download the setup script:**
+**Run the setup script directly with sudo:**
 
-   ```sh
-   curl -fsSLO https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh
-   ```
-
-2. **Run the Koha setup script with sudo:**
-
-   ```sh
-   sudo -E bash koha_setup.sh
-   ```
-   
-   _Optional: To install a specific Koha release (e.g. `oldstable`):_
-   ```sh
-   sudo KOHA_RELEASE=oldstable bash koha_setup.sh
-   ```
-
-3. **Install Koha:**
-
-   ```sh
-   sudo apt-get install -y koha-common
-   ```
-
-#### Versioning
-To check the version of the script:
 ```sh
-./koha_setup.sh --version
+curl -fsSL https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh | sudo -E bash
+```
+
+**Alternatively, download and run the Koha setup script with sudo:**
+
+```
+curl -fsSLO https://raw.githubusercontent.com/saiful-semantic/KohaOnUbuntu/main/koha_setup.sh
+sudo bash koha_setup.sh
+
+# To install a specific Koha release (e.g. `oldstable`):
+# sudo KOHA_RELEASE=oldstable bash koha_setup.sh
+```
+
+**Install Koha:**
+
+```sh
+sudo apt-get install -y koha-common
+```
+
+**Install MariaDB or MySQL and enable requried Apache modules**
+
+```sh
+sudo apt-get install -y mariadb-server
+sudo a2enmod rewrite cgi headers proxy_http ssl
+sudo systemctl restart apache2
+```
+
+**Proceed with creating a new Koha instance:**
+
+```sh
+sudo koha-create --create-db <instance_name>
 ```
